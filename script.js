@@ -28,7 +28,6 @@ submitBtn.addEventListener('click',(e)=>{
     addBookToLibrary(title,author,pages,read);
 
     dialog.close();
-    displayBooks();
     document.querySelector('form').reset();
 })
 
@@ -91,7 +90,9 @@ function addBookToLibrary(title,author,pages,read) {
     var book = new Book(title,author,pages,read);
     console.log(book);
     myLibrary.push(book);
-    displayBooks();
+    refresh(book);
   // do stuff here
 
 }
+
+
