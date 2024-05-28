@@ -34,14 +34,37 @@ body{
 }
 
 .card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin: 20px;
-    width: calc(33.33% - 40px); /* Adjust card width based on number of columns */
     max-width: 300px;
-     /* Set maximum card width */
-     max-height: 300px;
-    transition: transform 0.2s;
-    flex-grow: 1; /* Allow cards to grow in flexbox */
+    max-height: 300px;
+    padding: 20px;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-content {
+    text-align: center;
+}
+
+.title {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333333;
+}
+
+.author, .pages, .read {
+    font-size: 16px;
+    color: #666666;
+    margin-bottom: 5px;
+}
+
+.read {
+    font-weight: bold;
+    color: #008000; /* Green color for "Yes" */
 }
