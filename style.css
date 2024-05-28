@@ -1,0 +1,47 @@
+body{
+    background-color:#e6f7ff;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 10fr;
+    min-height: 100vh;
+    grid-template-areas: 
+    'title title'
+    'lside rside';
+    
+}
+
+.title{
+    grid-area: title;
+    text-align: center;
+}
+
+.title p{
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.rside{
+    grid-area: rside;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.lside{
+    grid-area: lside;
+}
+
+.card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    width: calc(33.33% - 40px); /* Adjust card width based on number of columns */
+    max-width: 300px;
+     /* Set maximum card width */
+     max-height: 300px;
+    transition: transform 0.2s;
+    flex-grow: 1; /* Allow cards to grow in flexbox */
+}
