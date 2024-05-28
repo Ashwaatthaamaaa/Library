@@ -28,7 +28,7 @@ submitBtn.addEventListener('click',(e)=>{
     addBookToLibrary(title,author,pages,read);
 
     dialog.close();
-
+    displayBooks();
     document.querySelector('form').reset();
 })
 
@@ -44,15 +44,54 @@ function Book(title,author,pages,read) {
 
 }
 
-function refresh(){
-    
+
+
+function refresh(book){
+    let card = document.createElement('div');
+    card.classList.add('card');
+
+    let cardContent = document.createElement('div');
+    cardContent.classList.add('card-content');
+
+    let title = document.createElement('p');
+    title.textContent=book.title;
+    title.classList.add('title');
+
+    let author = document.createElement('p');
+    author.textContent="Author: " + book.author;
+    author.classList.add('author');
+
+    let pages = document.createElement('p');
+    pages.textContent="Pages: " + book.pages;
+    pages.classList.add('pages');
+
+    let read = document.createElement('p');
+    let message = read == 1? "yes" : "no";
+    read.textContent="Read? :" + message;
+    read.classList.add('read');
+
+
+    cardContent.appendChild(title);
+    cardContent.appendChild(author);
+    cardContent.appendChild(pages);
+    cardContent.appendChild(read);
+    card.appendChild(cardContent);
+
+
+    document.querySelector('.rside').appendChild(card);
+}
+
+function displayBooks(){
+    myLibrary.forEach(book => {
+        refresh(book);
+    })
 }
 
 function addBookToLibrary(title,author,pages,read) {
     var book = new Book(title,author,pages,read);
     console.log(book);
     myLibrary.push(book);
-
+    displayBooks();
   // do stuff here
 
 }
