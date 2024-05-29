@@ -6,6 +6,8 @@ var closeBtn = document.querySelector("#close");
 
 var submitBtn = document.querySelector('#submit');
 
+var removeBtn = document.querySelector('.remove');
+
 openBtn.addEventListener('click',()=>{
     dialog.showModal();
 })
@@ -32,6 +34,13 @@ submitBtn.addEventListener('click',(e)=>{
 })
 
 
+//removeBtn.addEventListener('click');
+
+
+function removeBook(){
+
+}
+
 const myLibrary = [];
 
 function Book(title,author,pages,read) {
@@ -45,44 +54,65 @@ function Book(title,author,pages,read) {
 
 
 
-function refresh(book){
-    let card = document.createElement('div');
-    card.classList.add('card');
+function refresh(){
+    let container = document.querySelector('.rside');
+    container.innerHTML = ''; // Clear the container
 
-    let cardContent = document.createElement('div');
-    cardContent.classList.add('card-content');
+    myLibrary.forEach((book, index) => {
+        // Create card element
+        let card = document.createElement("div");
+        card.classList.add("card");
 
-    let title = document.createElement('p');
-    title.textContent=book.title;
-    title.classList.add('title');
+        // Create card content
+        let cardContent = document.createElement("div");
+        cardContent.classList.add("card-content");
 
-    let author = document.createElement('p');
-    author.textContent="Author: " + book.author;
-    author.classList.add('author');
+        let title = document.createElement("h2");
+        title.textContent = book.title;
+        title.classList.add('title');
 
-    let pages = document.createElement('p');
-    pages.textContent="Pages: " + book.pages;
-    pages.classList.add('pages');
-
-    let read = document.createElement('p');
-    let message = read == 1? "yes" : "no";
-    read.textContent="Read? :" + message;
-    read.classList.add('read');
+        let author = document.createElement("p");
+        author.textContent = "by " + book.author;
+        author.classList.add('author')
 
 
-    cardContent.appendChild(title);
-    cardContent.appendChild(author);
-    cardContent.appendChild(pages);
-    cardContent.appendChild(read);
-    card.appendChild(cardContent);
+        let pages = document.createElement("p");
+        pages.textContent = book.pages + " pages";
+        pages.classList.add('title');
 
 
-    document.querySelector('.rside').appendChild(card);
+        let read = document.createElement('p');
+        let correct = read.value == 1? "YES" : "NO";
+        read.textContent=correct;
+        read.classList.add('pages');
+        // Create remove button
+        let removeButton = document.createElement("button");
+        removeButton.textContent = "Remove";
+        removeButton.addEventListener("click", (function(index) {
+            return function() {
+                // Remove the corresponding element from the array
+                myLibrary.splice(index, 1);
+                // Regenerate the cards
+                refresh();
+            }
+        })(index));
+
+        // Append content and remove button to card
+        cardContent.appendChild(title);
+        cardContent.appendChild(author);
+        cardContent.appendChild(pages);
+        cardContent.appendChild(read);
+        cardContent.appendChild(removeButton);
+        card.appendChild(cardContent);
+
+        // Append card to container
+        container.appendChild(card);
+    });
 }
 
 function displayBooks(){
     myLibrary.forEach(book => {
-        refresh(book);
+        refresh();
     })
 }
 
@@ -90,7 +120,7 @@ function addBookToLibrary(title,author,pages,read) {
     var book = new Book(title,author,pages,read);
     console.log(book);
     myLibrary.push(book);
-    refresh(book);
+    refresh();
   // do stuff here
 
 }
