@@ -81,10 +81,15 @@ function refresh(){
         pages.classList.add('title');
 
 
-        let read = document.createElement('p');
-        let correct = read.value == 1? "YES" : "NO";
-        read.textContent=correct;
-        read.classList.add('pages');
+        //let read = document.createElement('p');
+        // let correct = read.value == 1? "YES" : "NO";
+        // read.textContent=correct;
+        // read.classList.add('pages');
+
+
+        let readToggle = document.createElement('button');
+        readToggle.textContent= book.read == 1? "YES" : "NO";
+        readToggle.classList.add('btn');
         // Create remove button
         let removeButton = document.createElement("button");
         removeButton.textContent = "Remove";
@@ -93,7 +98,7 @@ function refresh(){
                 // Remove the corresponding element from the array
                 myLibrary.splice(index, 1);
                 // Regenerate the cards
-                refresh();
+                generateCards();
             }
         })(index));
 
@@ -101,7 +106,7 @@ function refresh(){
         cardContent.appendChild(title);
         cardContent.appendChild(author);
         cardContent.appendChild(pages);
-        cardContent.appendChild(read);
+        cardContent.appendChild(readToggle);
         cardContent.appendChild(removeButton);
         card.appendChild(cardContent);
 
