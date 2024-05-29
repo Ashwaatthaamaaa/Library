@@ -87,20 +87,34 @@ function refresh(){
         // read.classList.add('pages');
 
 
-        let readToggle = document.createElement('button');
-        readToggle.textContent= book.read == 1? "YES" : "NO";
-        readToggle.classList.add('btn');
+
         // Create remove button
         let removeButton = document.createElement("button");
         removeButton.textContent = "Remove";
+        removeButton.classList.add('removeBtn');
         removeButton.addEventListener("click", (function(index) {
             return function() {
                 // Remove the corresponding element from the array
                 myLibrary.splice(index, 1);
                 // Regenerate the cards
-                generateCards();
+                refresh();
             }
         })(index));
+
+
+        let readToggle = document.createElement('button');
+        readToggle.textContent= book.read == 1? "YES" : "NO";
+        readToggle.classList.add('readBtn');
+        let readStatus = document.querySelector('.readBtn')
+        readToggle.addEventListener('click',(function (index){
+            return function(){
+                readToggle.textContent= readToggle.textContent == "YES"? "NO":"YES";
+                myLibrary[index].read = readToggle.textContent == "YES" ? 1 : 0;    
+            }
+
+
+        })(index));
+
 
         // Append content and remove button to card
         cardContent.appendChild(title);
