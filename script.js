@@ -1,147 +1,171 @@
-var dialog = document.querySelector("#modal");
-
-var openBtn = document.querySelector("#open");
-
-var closeBtn = document.querySelector("#close");
-
-var submitBtn = document.querySelector('#submit');
-
-var removeBtn = document.querySelector('.remove');
-
-openBtn.addEventListener('click',()=>{
-    dialog.showModal();
-})
 
 
-closeBtn.addEventListener('click',(e)=>{
-
-    dialog.close();
-})
-
-submitBtn.addEventListener('click',(e)=>{
-    e.preventDefault();
-
-    var title = document.querySelector("#title").value;
-    var author = document.querySelector("#author").value;
-    var pages = document.querySelector("#pages").value;
-    var checkbox = document.querySelector("#read");
-    var read = checkbox.checked? 1:0;
-    
-    addBookToLibrary(title,author,pages,read);
-
-    dialog.close();
-    document.querySelector('form').reset();
-})
 
 
-//removeBtn.addEventListener('click');
 
+class Book {
+    constructor(title, author, pages, read) {
+        // the constructor...
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
 
-function removeBook(){
-
-}
-
-const myLibrary = [];
-
-function Book(title,author,pages,read) {
-    // the constructor...
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-
+    }
 }
 
 
 
-function refresh(){
-    let container = document.querySelector('.rside');
-    container.innerHTML = ''; // Clear the container
 
-    myLibrary.forEach((book, index) => {
-        // Create card element
-        let card = document.createElement("div");
-        card.classList.add("card");
-
-        // Create card content
-        let cardContent = document.createElement("div");
-        cardContent.classList.add("card-content");
-
-        let title = document.createElement("h2");
-        title.textContent = book.title;
-        title.classList.add('title');
-
-        let author = document.createElement("p");
-        author.textContent = "by " + book.author;
-        author.classList.add('author')
+class myLibrary {
 
 
-        let pages = document.createElement("p");
-        pages.textContent = book.pages + " pages";
-        pages.classList.add('title');
-
-
-        //let read = document.createElement('p');
-        // let correct = read.value == 1? "YES" : "NO";
-        // read.textContent=correct;
-        // read.classList.add('pages');
-
-
-
-        // Create remove button
-        let removeButton = document.createElement("button");
-        removeButton.textContent = "Remove";
-        removeButton.classList.add('removeBtn');
-        removeButton.addEventListener("click", (function(index) {
-            return function() {
-                // Remove the corresponding element from the array
-                myLibrary.splice(index, 1);
-                // Regenerate the cards
-                refresh();
-            }
-        })(index));
-
-
-        let readToggle = document.createElement('button');
-        readToggle.textContent= book.read == 1? "YES" : "NO";
-        readToggle.classList.add('readBtn');
-        let readStatus = document.querySelector('.readBtn')
-        readToggle.addEventListener('click',(function (index){
-            return function(){
-                readToggle.textContent= readToggle.textContent == "YES"? "NO":"YES";
-                myLibrary[index].read = readToggle.textContent == "YES" ? 1 : 0;    
-            }
-
-
-        })(index));
-
-
-        // Append content and remove button to card
-        cardContent.appendChild(title);
-        cardContent.appendChild(author);
-        cardContent.appendChild(pages);
-        cardContent.appendChild(readToggle);
-        cardContent.appendChild(removeButton);
-        card.appendChild(cardContent);
-
-        // Append card to container
-        container.appendChild(card);
-    });
-}
-
-function displayBooks(){
-    myLibrary.forEach(book => {
+    addBookToLibrary(title,author,pages,read){
+        var book = new Book(title,author,pages,read);
+        console.log(book);
+        myLibrary.push(book);
         refresh();
-    })
+    }
+
+    displayBooks(){
+        function displayBooks(){
+            myLibrary.forEach(book => {
+            refresh();
+        })
+    }
+
+
+    refresh() {
+        
+        container.innerHTML = ''; // Clear the container
+    
+        myLibrary.forEach((book, index) => {
+            // Create card element
+            let card = document.createElement("div");
+            card.classList.add("card");
+    
+            // Create card content
+            let cardContent = document.createElement("div");
+            cardContent.classList.add("card-content");
+    
+            let title = document.createElement("h2");
+            title.textContent = book.title;
+            title.classList.add('title');
+    
+            let author = document.createElement("p");
+            author.textContent = "by " + book.author;
+            author.classList.add('author')
+    
+    
+            let pages = document.createElement("p");
+            pages.textContent = book.pages + " pages";
+            pages.classList.add('title');
+    
+    
+            //let read = document.createElement('p');
+            // let correct = read.value == 1? "YES" : "NO";
+            // read.textContent=correct;
+            // read.classList.add('pages');
+    
+    
+    
+            // Create remove button
+            let removeButton = document.createElement("button");
+            removeButton.textContent = "Remove";
+            removeButton.classList.add('removeBtn');
+            removeButton.addEventListener("click", (function(index) {
+                return function() {
+                    // Remove the corresponding element from the array
+                    myLibrary.splice(index, 1);
+                    // Regenerate the cards
+                    refresh();
+                }
+            })(index));
+    
+    
+            let readToggle = document.createElement('button');
+            readToggle.textContent= book.read == 1? "YES" : "NO";
+            readToggle.classList.add('readBtn');
+            let readStatus = document.querySelector('.readBtn')
+            readToggle.addEventListener('click',(function (index){
+                return function(){
+                    readToggle.textContent= readToggle.textContent == "YES"? "NO":"YES";
+                    myLibrary[index].read = readToggle.textContent == "YES" ? 1 : 0;    
+                }
+    
+    
+            })(index));
+    
+    
+            // Append content and remove button to card
+            cardContent.appendChild(title);
+            cardContent.appendChild(author);
+            cardContent.appendChild(pages);
+            cardContent.appendChild(readToggle);
+            cardContent.appendChild(removeButton);
+            card.appendChild(cardContent);
+    
+            // Append card to container
+            container.appendChild(card);
+        });
+    }
 }
 
-function addBookToLibrary(title,author,pages,read) {
-    var book = new Book(title,author,pages,read);
-    console.log(book);
-    myLibrary.push(book);
-    refresh();
-  // do stuff here
+
+
+
+
+
+
+
+
+
+
+
+class appController extends Book{
+    constructor(){
+        var dialog = document.querySelector("#modal");
+
+        var openBtn = document.querySelector("#open");
+        
+        var closeBtn = document.querySelector("#close");
+        
+        var submitBtn = document.querySelector('#submit');
+        
+        var removeBtn = document.querySelector('.remove');
+
+        let container = document.querySelector('.rside');
+        
+        openBtn.addEventListener('click',()=>{
+            dialog.showModal();
+        })
+        
+        
+        closeBtn.addEventListener('click',(e)=>{
+        
+            dialog.close();
+        })
+        
+        submitBtn.addEventListener('click',(e)=>{
+            e.preventDefault();
+        
+            var title = document.querySelector("#title").value;
+            var author = document.querySelector("#author").value;
+            var pages = document.querySelector("#pages").value;
+            var checkbox = document.querySelector("#read");
+            var read = checkbox.checked? 1:0;
+            
+            addBookToLibrary(title,author,pages,read);
+        
+            dialog.close();
+            document.querySelector('form').reset();
+
+            const myLibrary = [];
+        })
+    }
+
+
 
 }
 
-
+const app = new appController();
