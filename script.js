@@ -14,15 +14,8 @@ class Library {
 
     addBookToLibrary(title, author, pages, read) {
         const book = new Book(title, author, pages, read);
-        console.log(book);
         this.books.push(book);
         this.refresh();
-    }
-
-    displayBooks() {
-        this.books.forEach(book => {
-            this.refresh();
-        });
     }
 
     refresh() {
@@ -30,11 +23,9 @@ class Library {
         container.innerHTML = ''; // Clear the container
     
         this.books.forEach((book, index) => {
-            // Create card element
             let card = document.createElement("div");
             card.classList.add("card");
     
-            // Create card content
             let cardContent = document.createElement("div");
             cardContent.classList.add("card-content");
     
@@ -50,7 +41,6 @@ class Library {
             pages.textContent = book.pages + " pages";
             pages.classList.add('title');
     
-            // Create remove button
             let removeButton = document.createElement("button");
             removeButton.textContent = "Remove";
             removeButton.classList.add('removeBtn');
@@ -90,6 +80,7 @@ class AppController {
         const openBtn = document.querySelector("#open");
         const closeBtn = document.querySelector("#close");
         const submitBtn = document.querySelector('#submit');
+        const form = document.querySelector('#book-form');
 
         openBtn.addEventListener('click', () => {
             dialog.showModal();
@@ -99,17 +90,22 @@ class AppController {
             dialog.close();
         });
 
-        submitBtn.addEventListener('click', (e) => {
+        document.querySelector('form').addEventListener('submit', (e) => {
             e.preventDefault();
-    
+
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
             const title = document.querySelector("#title").value;
             const author = document.querySelector("#author").value;
             const pages = document.querySelector("#pages").value;
             const checkbox = document.querySelector("#read");
             const read = checkbox.checked ? 1 : 0;
-    
+
             this.library.addBookToLibrary(title, author, pages, read);
-    
+
             dialog.close();
             document.querySelector('form').reset();
         });
